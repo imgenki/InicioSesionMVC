@@ -22,84 +22,83 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-public class InicioSesionView extends FlowPane {
+public class InicioSesionView extends GridPane {
 	Label usuarioLabel;
 	TextField usuarioText;
 	Label contrasenaLabel;
 	PasswordField contrasenaPassword;
 	Button accederButton;
 	Button cancelarButton;
-	GridPane loginGrid;
 	HBox botonesBox;
-	Alert acierto;
-	Alert fallo;
+	Alert aciertoAlert;
+	Alert falloAlert;
+
 	public InicioSesionView() {
-		
+		// Usuario
 		usuarioLabel = new Label("Usuario:");
 		usuarioText = new TextField();
 		usuarioText.setPromptText("Usuario");
-
+		
+		// Contrasena
 		contrasenaLabel = new Label("Contraseña:");
 		contrasenaPassword = new PasswordField();
 		contrasenaPassword.setPromptText("Contraseña");
-
+		
+		//HBox botones
 		accederButton = new Button("Acceder");
 		cancelarButton = new Button("Cancelar");
 		botonesBox = new HBox();
 		botonesBox.getChildren().addAll(accederButton, cancelarButton);
 		botonesBox.setSpacing(10);
-		loginGrid = new GridPane();
+		botonesBox.setAlignment(Pos.CENTER);
+		botonesBox.setPadding(new Insets(5));
 		
-		loginGrid.addRow(0, usuarioLabel, usuarioText);
-		loginGrid.addRow(1, contrasenaLabel, contrasenaPassword);
-		loginGrid.addRow(2, botonesBox);
-		
-		loginGrid.setColumnSpan(botonesBox, 2);
-		loginGrid.setHalignment(botonesBox, HPos.CENTER);
-		loginGrid.setGridLinesVisible(true);
-		getChildren().addAll(loginGrid);
-		
-		setHgap(2);
-		setVgap(4);
+		//Panel Login
+		addRow(0, usuarioLabel, usuarioText);
+		addRow(1, contrasenaLabel, contrasenaPassword);
+		addRow(2, botonesBox);
+
+		setPadding(new Insets(15));
+		setHgap(35);
+		setVgap(15);
 		setAlignment(Pos.CENTER);
-		setOrientation(Orientation.HORIZONTAL);
-		
-		
-		
-		
+		GridPane.setColumnSpan(botonesBox, 2);
 	}
-	
+
 	// Ventana en caso de acierto
-	public void acierto() {
-		acierto = new Alert(AlertType.INFORMATION);
-		acierto.setTitle("Iniciar sesión");
-		acierto.setHeaderText("Acceso Permitido");
-		acierto.setContentText("Las credenciales de acceso son válidas");
+	public void getAciertoAlert() {
+		aciertoAlert = new Alert(AlertType.INFORMATION);
+		aciertoAlert.setTitle("Iniciar sesión");
+		aciertoAlert.setHeaderText("Acceso Permitido");
+		aciertoAlert.setContentText("Las credenciales de acceso son válidas");
 
-		acierto.showAndWait();
+		aciertoAlert.showAndWait();
 	}
-	
+
 	// Ventana en caso de fallo
-	public void fallo(String mayorMenor, int numIntroducido) {
-		fallo = new Alert(AlertType.WARNING);
-		fallo.setTitle("Iniciar sesión");
-		fallo.setHeaderText("Acceso denegado");
-		fallo.setContentText("El usuario y/o la contraseña no son válidos");
+	public void getFalloAlert() {
+		falloAlert = new Alert(AlertType.WARNING);
+		falloAlert.setTitle("Iniciar sesión");
+		falloAlert.setHeaderText("Acceso denegado");
+		falloAlert.setContentText("El usuario y/o la contraseña no son válidos");
 
-		fallo.showAndWait();
+		falloAlert.showAndWait();
 
 	}
+
 	public Button getAccederButton() {
 		return accederButton;
 	}
+
 	public Button getCancelarButton() {
 		return accederButton;
 	}
+
 	public TextField getUsuarioText() {
 		return usuarioText;
 	}
-	
+
 	public PasswordField getConstrasenaPassword() {
 		return contrasenaPassword;
 	}
-	}
+}

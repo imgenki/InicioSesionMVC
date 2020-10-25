@@ -11,25 +11,37 @@ import java.util.function.Consumer;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import javafx.beans.property.StringProperty;
+
 public class InicioSesionModel {
-	private String username;
-	private String password;
+	private StringProperty username;
+	private StringProperty password;
 	private String md5;
+	private BufferedReader csvReader;
+	ArrayList<String> md5List = new ArrayList<>();
 
-	public void setUsername(String username) {
-		this.username = username;
+	public final StringProperty usernameProperty() {
+		return this.username;
 	}
 
-	public String getUsername() {
-		return username;
+	public final String getUsername() {
+		return this.usernameProperty().get();
 	}
 
-	public String getPassword() {
-		return password;
+	public final void setUsername(final String username) {
+		this.usernameProperty().set(username);
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public final StringProperty passwordProperty() {
+		return this.password;
+	}
+
+	public final String getPassword() {
+		return this.passwordProperty().get();
+	}
+
+	public final void setPassword(final String password) {
+		this.passwordProperty().set(password);
 	}
 
 	public String getMd5() {
@@ -37,38 +49,37 @@ public class InicioSesionModel {
 	}
 
 	public void setMd5() {
-		this.md5 = DigestUtils.md5Hex(password).toUpperCase();
+		this.md5 = DigestUtils.md5Hex(getPassword()).toUpperCase();
 	}
 
-	public static List<String> leerLineaALinea(File fichero, Charset charset) throws IOException {
-		List<String> lines = new ArrayList<String>();
-		FileReader fr = new FileReader(fichero, charset);
-		BufferedReader br = new BufferedReader(fr);
-		String line;
-		while ((line = br.readLine()) != null) {
-			lines.add(line);
+	public void loadCSV() {
+		try {
+			String line;
+			csvReader = new BufferedReader(new FileReader("./resources/users.csv", Charset.forName("UTF-8")));
+
+			while ((line = csvReader.readLine()) != null)
+				md5List.add(line);
+
+			csvReader.close();
+		} catch (IOException e) {
+
 		}
-		br.close();
-		fr.close();
-		return lines;
 	}
 
-	public boolean compareMD5() throws IOException {
-		Consumer<String> printer = l -> {
-			String[] parts = l.split(",");
-			String username = parts[0];
-			String password = parts[1];
-			
-			List<String> lines1 = null;
-			try {
-				lines1 = leerLineaALinea(new File("datos.csv"), Charset.forName("UTF-8"));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			lines1.stream().forEach(printer);
-		};
+	boolean checkMd5() throws IOException {
+		Boolean resultado = false;
+		setMd5();
+		for (int i = 0; i < md5List.size(); i++) {
+			String[] data = md5List.get(i).split(",");
+			String username = data[0];
+			String password = data[1];
 
+			if (username.equals(getUsername()) && password.equals(getMd5())) {
+				resultado = true;
+				break;
+			}
+		}
+		return resultado;
 	}
 
 }
