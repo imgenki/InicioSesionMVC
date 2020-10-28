@@ -11,11 +11,12 @@ import java.util.function.Consumer;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class InicioSesionModel {
-	private StringProperty username;
-	private StringProperty password;
+	private StringProperty username = new SimpleStringProperty();
+	private StringProperty password = new SimpleStringProperty();
 	private String md5;
 	private BufferedReader csvReader;
 	ArrayList<String> md5List = new ArrayList<>();

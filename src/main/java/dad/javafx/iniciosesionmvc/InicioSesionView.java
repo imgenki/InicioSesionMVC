@@ -91,7 +91,7 @@ public class InicioSesionView extends GridPane {
 	}
 
 	public Button getCancelarButton() {
-		return accederButton;
+		return cancelarButton;
 	}
 
 	public TextField getUsuarioText() {

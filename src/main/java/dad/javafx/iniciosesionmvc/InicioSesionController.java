@@ -22,10 +22,10 @@ public class InicioSesionController {
 
 	private void onAccederButtonAction (ActionEvent e){
 		//Establecer Usuario y Contraseña en el modelo
-		model.setUsername(view.getUsuarioText().textProperty().get());
-		model.setPassword(view.getConstrasenaPassword().textProperty().get());
+		model.usernameProperty().set(view.getUsuarioText().textProperty().getValue());
+		model.passwordProperty().set(view.getConstrasenaPassword().textProperty().getValue());
 		
-		//Cargamos el csv
+		//Cargamos el csv	
 		model.loadCSV();
 		
 		//Convertimos nuestra contraseña a MD5
@@ -38,7 +38,7 @@ public class InicioSesionController {
 			else
 				view.getFalloAlert();
 		} catch (IOException e1) {
-			
+			//view.getFalloAlert();
 		}
 			
 	}
