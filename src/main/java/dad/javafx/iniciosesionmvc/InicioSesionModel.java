@@ -50,7 +50,7 @@ public class InicioSesionModel {
 	}
 
 	public void setMd5() {
-		this.md5 = DigestUtils.md5Hex(getPassword()).toUpperCase();
+		this.md5 = DigestUtils.md5Hex(passwordProperty().get()).toUpperCase();
 	}
 
 	public void loadCSV() {
@@ -69,13 +69,12 @@ public class InicioSesionModel {
 
 	boolean checkMd5() throws IOException {
 		Boolean resultado = false;
-		setMd5();
 		for (int i = 0; i < md5List.size(); i++) {
 			String[] data = md5List.get(i).split(",");
-			String username = data[0];
-			String password = data[1];
+			String usr = data[0];
+			String pwd = data[1];
 
-			if (username.equals(getUsername()) && password.equals(getMd5())) {
+			if (usr.equals(usernameProperty().get()) && pwd.equals(getMd5())) {
 				resultado = true;
 				break;
 			}

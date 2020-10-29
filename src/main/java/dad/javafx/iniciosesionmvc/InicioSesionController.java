@@ -12,6 +12,8 @@ public class InicioSesionController {
 	public InicioSesionController() {
 		view.getAccederButton().setOnAction(e -> onAccederButtonAction(e));
 		view.getCancelarButton().setOnAction(e -> onCancelarButtonAction(e));
+		//Cargamos el csv	
+		model.loadCSV();
 	}
 	public InicioSesionView getView() {
 		return view;
@@ -24,9 +26,6 @@ public class InicioSesionController {
 		//Establecer Usuario y Contraseña en el modelo
 		model.usernameProperty().set(view.getUsuarioText().textProperty().getValue());
 		model.passwordProperty().set(view.getConstrasenaPassword().textProperty().getValue());
-		
-		//Cargamos el csv	
-		model.loadCSV();
 		
 		//Convertimos nuestra contraseña a MD5
 		model.setMd5();
