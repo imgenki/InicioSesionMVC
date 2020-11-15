@@ -38,6 +38,7 @@ public class InicioSesionController {
 				view.getFalloAlert();
 		} catch (IOException e1) {
 			//view.getFalloAlert();
+			System.out.print("algo no va bien");
 		}
 			
 	}

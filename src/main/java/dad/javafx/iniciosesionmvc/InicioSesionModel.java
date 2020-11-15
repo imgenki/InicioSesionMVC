@@ -56,14 +56,15 @@ public class InicioSesionModel {
 	public void loadCSV() {
 		try {
 			String line;
-			csvReader = new BufferedReader(new FileReader("./resources/users.csv", Charset.forName("UTF-8")));
+			File file = new File ("src/main/resources/users.csv");
+			csvReader = new BufferedReader(new FileReader(file, Charset.forName("UTF-8")));
 
 			while ((line = csvReader.readLine()) != null)
 				md5List.add(line);
 
 			csvReader.close();
 		} catch (IOException e) {
-
+			System.out.print("No carga");
 		}
 	}
 
